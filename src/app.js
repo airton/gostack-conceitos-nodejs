@@ -29,17 +29,6 @@ const validateRepositorieLikes = (request, response, next) => {
   return next()
 }
 
-const validateRepositoryUpdate = (request, response, next) => {
-  const { likes } = request.body
-
-  if (likes || likes === 0) {
-      return response.status(400)
-        .json({ error: 'Invalid update repositorie' })
-  }
-
-  return next()
-}
-
 app.use('/repositories/:id', validateRepositorieId)
 
 const repositories = [];
@@ -64,7 +53,7 @@ app.post("/repositories", validateRepositorieLikes, (request, response) => {
   return response.json(repository)
 });
 
-app.put("/repositories/:id", validateRepositoryUpdate, (request, response) => {
+app.put("/repositories/:id", (request, response) => {
   const { id } = request.params
   const { title, url, techs } = request.body
 
